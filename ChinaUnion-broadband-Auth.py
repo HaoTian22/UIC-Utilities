@@ -62,7 +62,7 @@ if match:
 
 # 第二层-运营商登录
 
-redirect_url=requests.get("http://www.baidu.com",allow_redirects=False).headers['Location']
+redirect_url=requests.get("http://www.baidu.com",allow_redirects=False,headers=headers).headers['Location']
 wlanip = re.findall(r"wlanuserip=(.*)", redirect_url)[0]
 #  requests.get("http://portal.gd165.com/?wlanuserip=172.29.105.168&wlanacname=&basname=120.80.200.50&ssid=uiczh.edu&vlanid=ethtrunk/10:4001.0")
 
