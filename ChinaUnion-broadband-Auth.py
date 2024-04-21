@@ -2,13 +2,19 @@ import requests
 import re
 import base64
 
-'''自己修改的数据'''
+'''自己修改/输入的数据'''
 # UIC网络账户
-UICAccountID='t*******'
+UICAccountID=input("UIC账号:")
+if UICAccountID == '' or UICAccountID == None:
+  UICAccountID='t*******'
 # 运营商宽带密码
-wlan_password='*******' 
+wlan_password=input("宽带密码:")
+if wlan_password == '' or wlan_password == None:
+  wlan_password='*******'
 # UIC网络密码
-UICPassword='*******'
+UICPassword=input("UIC密码:")
+if UICPassword == '' or UICPassword == None:
+  UICPassword='*******'
 
 '''以下部分应该不用修改，如果不同可以自己修改'''
 # 推算出来的学号
@@ -18,27 +24,29 @@ username='vip'+UICStudentID
 
 # 固定数据
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.1938.69',
-    'Content-Type': 'application/x-www-form-urlencoded'
-}
-
-headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
     "Accept-Encoding": "gzip, deflate",
     "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
     "Cache-Control": "max-age=0",
-    "Content-Length": "195",
-    "Content-Type": "application/x-www-form-urlencoded",
-    "DNT": "1",
-    "Host": "portal.gd165.com",
-    "Origin": "http://portal.gd165.com",
-    "Proxy-Connection": "keep-alive",
-    "Referer": "http://portal.gd165.com/?wlanuserip=172.29.105.168&wlanacname=&basname=120.80.200.50&ssid=uiczh.edu&vlanid=ethtrunk/10:4001.0",
-    "Upgrade-Insecure-Requests": "1",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.1938.81"
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.1938.69',
+    'Content-Type': 'application/x-www-form-urlencoded'
 }
 
-
+# headers = {
+#     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+#     "Accept-Encoding": "gzip, deflate",
+#     "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+#     "Cache-Control": "max-age=0",
+#     "Content-Length": "195",
+#     "Content-Type": "application/x-www-form-urlencoded",
+#     "DNT": "1",
+#     "Host": "portal.gd165.com",
+#     "Origin": "http://portal.gd165.com",
+#     "Proxy-Connection": "keep-alive",
+#     "Referer": "http://portal.gd165.com/?wlanuserip=172.29.105.168&wlanacname=&basname=120.80.200.50&ssid=uiczh.edu&vlanid=ethtrunk/10:4001.0",
+#     "Upgrade-Insecure-Requests": "1",
+#     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.1938.81"
+# }
 
 
 # 第一层-UIC登录
@@ -47,7 +55,7 @@ if AuthIP.status_code==204:
   print("Already login")
 else:
   print(AuthIP)
-redirect_url=requests.get("http://www.baidu.com",allow_redirects=False).headers['Location']
+redirect_url=requests.get("http://www.baidu.com",allow_redirects=False,headers=headers).headers['Location']
 match = re.search(r"byod", redirect_url)
 if match:
   # http://172.29.250.5:30004/byod/byodrs/login/defaultLogin
