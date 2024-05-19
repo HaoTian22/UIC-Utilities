@@ -30,5 +30,11 @@ To use this script efficiently, you can implement some extra operations:
 4. **Follow the screenshots below to further configure the script**  
 
 ![image](https://github.com/HaoTian22/UIC-Utilities/assets/48882584/d2390d98-ccda-4b71-8d48-b968783bbafd)
+
 ![image](https://github.com/HaoTian22/UIC-Utilities/assets/48882584/6a4f966d-a60a-4d43-9965-65f3344afcf1)
+
 ![image](https://github.com/HaoTian22/UIC-Utilities/assets/48882584/2f7e70cb-5b71-497b-a962-e40ef69655d6)
+
+## More
+
+If you want a script with simliar funtions in Powershell, you can also try [this](https://github.com/doodlehuang/keep_wifi_connection)
