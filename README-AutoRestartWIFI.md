@@ -17,6 +17,15 @@ Among these solutions, some might genuinely solve the problem, but the trigger c
 
 So, I thought of a simple solution—write a script to automatically disconnect and reconnect the WiFi when a disconnection is detected. This can be used as a temporary workaround, and I can later analyze the script's log to see what caused the disconnection.
 
+## Script logic
+
+1. Retrieve the local network gateway address using the ipconfig /all command.
+2. If the gateway address cannot be detected, wait for 60 seconds and go back to step 1.
+3. If the gateway address is detected, `ping` the gateway to check its availability.
+4. If the gateway responds to the ping, wait for 60 seconds and go back to step 1 to check again.
+5. If the gateway does not respond to the ping, attempt to toggle the network device (Wi-Fi) and go back to step 1.
+6. If the gateway still does not respond after three consecutive attempts, skip steps 4 to 6 in the next round until a response is received.
+
 ## How to use
 
 1. Download the [batch file](./AutoRestartWIFI.bat)
