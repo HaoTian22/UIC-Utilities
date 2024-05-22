@@ -1,6 +1,8 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+REM You can modify the following settings
+
 set retry_count=0
 set max_retries=3
 set retry_enabled=1
@@ -10,10 +12,24 @@ set interval_reattempt=15
 
 :check_network
 
+REM Some network adapters may have different names, such as "Wi-Fi" or "Wireless Network Connection"
 set "interfaceName=WLAN"
 set "gatewayFound=false"
 set "wlan_gateway="
 set "gatewayDetected=false"
+
+REM ------------------------------------------------------------------------
+REM Do not modify the following lines, unless you know what you are doing
+
+REM 使用 netsh 命令检查 WLAN 的状态
+for /f "tokens=*" %%i in ('netsh interface show interface name="%interfaceName%"') do (
+    set "line=%%i"
+
+    REM 如果 WLAN 被禁用，启用它
+    echo !line! | findstr /C:"Admin state" | findstr /C:"Disabled" >nul && (
+        netsh interface set interface "%interfaceName%" admin=enable
+    )
+)
 
 REM 使用 ipconfig /all 命令获取网络接口信息并逐行处理
 for /f "tokens=*" %%i in ('ipconfig /all') do (
@@ -55,9 +71,9 @@ if %errorlevel% neq 0 (
         if !retry_count! lss !max_retries! (
             set /a retry_count+=1
             echo Network connection failed, attempting to reconnect...
-            netsh interface set interface name="WLAN" admin=disabled
+            netsh interface set interface "%interfaceName%" admin=disabled
             timeout 2 >nul
-            netsh interface set interface name="WLAN" admin=enabled
+            netsh interface set interface "%interfaceName%" admin=enabled
             timeout /t %interval_reattempt% >nul
             goto :check_network
         ) else (
