@@ -7,7 +7,7 @@ set retry_count=0
 set max_retries=3
 set retry_enabled=1
 set "logFile=logfile.txt"
-set interval=60
+set interval=120
 set interval_reattempt=15
 
 echo Starting script > "%logFile%"
@@ -22,7 +22,7 @@ set "gatewayDetected=false"
 REM ------------------------------------------------------------------------
 REM Do not modify the following lines, unless you know what you are doing
 
-echo Check time: %date% %time% >> "%logFile%"
+echo [%date% %time%] >> "%logFile%"
 REM 使用 netsh 命令检查 WLAN 的状态
 for /f "tokens=*" %%i in ('netsh interface show interface name="%interfaceName%"') do (
     set "line=%%i"
